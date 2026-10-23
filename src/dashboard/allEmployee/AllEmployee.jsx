@@ -1,7 +1,9 @@
+"use client";
+
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import Error from "../../pages/Error/Error";
-import Loading from "../../pages/loading/Loading";
+import Error from "../../screens/Error/Error";
+import Loading from "../../screens/loading/Loading";
 import { FaCheckCircle, FaQuestion } from "react-icons/fa";
 import { GiFireDash } from "react-icons/gi";
 import axios from "axios";
@@ -18,7 +20,7 @@ const AllEmployee = () => {
   } = useQuery({
     queryKey: ["allEmpList"],
     queryFn: async () => {
-      const res = await fetch(`${import.meta.env.VITE_Localhost}/allEmployee`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/allEmployee`);
       return res.json();
     },
   });
@@ -44,7 +46,7 @@ const AllEmployee = () => {
       .then(async (result) => {
         if (result.isConfirmed) {
           await axios
-            .patch(`${import.meta.env.VITE_Localhost}/fireEmployee/${id}`, {
+            .patch(`${process.env.NEXT_PUBLIC_API_URL}/fireEmployee/${id}`, {
               fired: true,
             })
             .then(
@@ -89,8 +91,8 @@ const AllEmployee = () => {
       </div>
 
       {viewMode === "table" ? (
-        <div className="overflow-x-auto">
-          <table className="min-w-full bg-white border border-gray-200 shadow-md rounded-lg">
+        <div className="dashboard-table-wrap">
+          <table className="dashboard-table">
             <thead className="bg-[#795548] text-gray-700 text-sm  md:text-base lg:text-lg">
               <tr>
                 <th className="p-3 text-left text-white">#</th>
@@ -102,7 +104,7 @@ const AllEmployee = () => {
             </thead>
             <tbody>
               {employees?.map((employee, index) => (
-                <tr key={employee.id} className="border-b hover:bg-gray-50 text-sm  md:text-base lg:text-lg">
+                <tr key={employee.id}>
                   <td className="p-3 font-semibold text-gray-800">
                     {index + 1}
                   </td>
@@ -113,7 +115,7 @@ const AllEmployee = () => {
                       onClick={async () => {
                         await axios
                           .patch(
-                            `${import.meta.env.VITE_Localhost}/makeHR/${
+                            `${process.env.NEXT_PUBLIC_API_URL}/makeHR/${
                               employee._id
                             }`,
                             { role: "hr" }
@@ -149,6 +151,13 @@ const AllEmployee = () => {
                   </td>
                 </tr>
               ))}
+              {employees.length === 0 && (
+                <tr>
+                  <td colSpan={5} className="dashboard-table-empty">
+                    No employees to display yet.
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
@@ -166,7 +175,7 @@ const AllEmployee = () => {
                 <button
                   onClick={async () => {
                     await axios.patch(
-                      `${import.meta.env.VITE_Localhost}/makeHR/${
+                      `${process.env.NEXT_PUBLIC_API_URL}/makeHR/${
                         employee._id
                       }`,
                       { role: "hr" }

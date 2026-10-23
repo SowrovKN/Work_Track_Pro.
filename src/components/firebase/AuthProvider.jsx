@@ -1,3 +1,5 @@
+"use client";
+
 import { createContext, useEffect, useState } from "react";
 import { auth } from "./firebase.config";
 import {
@@ -30,16 +32,11 @@ const Authprovider = ({ children }) => {
   };
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      if (currentUser?.email) {
-        setLoading(false);
-        setUser(currentUser);
-        
-      }
+      setUser(currentUser);
+      setLoading(false);
     });
-    return () => {
-      return unsubscribe();
-    };
-  }, [user]);
+    return unsubscribe;
+  }, []);
   const profile = (name, photo) => {
     return updateProfile(auth.currentUser, {
       displayName: name,

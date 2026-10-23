@@ -1,10 +1,12 @@
+"use client";
+
 import { FaCheckCircle } from "react-icons/fa";
 import { BsFillEyeFill, BsCurrencyDollar } from "react-icons/bs";
 import { ImCross } from "react-icons/im";
 import { useQuery } from "@tanstack/react-query";
-import Loading from "../../pages/loading/Loading";
-import Error from "../../pages/Error/Error";
-import { Link } from "react-router-dom";
+import Loading from "../../screens/loading/Loading";
+import Error from "../../screens/Error/Error";
+import Link from "next/link";
 import axios from "axios";
 import Swal from "sweetalert2";
 
@@ -17,7 +19,7 @@ const EmpList = () => {
   } = useQuery({
     queryKey: ["emplist"],
     queryFn: async () => {
-      const res = await fetch(`${import.meta.env.VITE_Localhost}/employee`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/employee`);
       return res.json();
     },
   });
@@ -57,7 +59,7 @@ const EmpList = () => {
       };
       try {
         axios
-          .post(`${import.meta.env.VITE_Localhost}/paymentReq`, values)
+          .post(`${process.env.NEXT_PUBLIC_API_URL}/paymentReq`, values)
 
           .then((response) => {
             if(response.data.insertedId){
@@ -77,24 +79,25 @@ const EmpList = () => {
   if (error) return <Error />;
   refetch();
   return (
-    <div className="overflow-x-auto " >
+    <div>
       <h1 className="text-3xl font-bold text-center mb-4">Employee List</h1>
-      <table className="min-w-full bg-white border border-gray-200 shadow-md rounded-lg">
-        <thead className="bg-[#795548] text-gray-700 text-sm md:text-base lg:text-lg">
-          <tr>
-            <th className="p-3 text-left text-white">#</th>
-            <th className="p-3 text-left text-white">Name</th>
-            <th className="p-3 text-left text-white">Email</th>
-            <th className="p-3 text-center text-white">Verified</th>
-            <th className="p-3 text-center text-white">Bank Account</th>
-            <th className="p-3 text-center text-white">Salary</th>
-            <th className="p-3 text-center text-white">Pay</th>
-            <th className="p-3 text-center text-white">Details</th>
-          </tr>
-        </thead>
-        <tbody>
-          {employees?.map((employee, index) => (
-            <tr key={employee.id} className="border-b hover:bg-gray-50 ">
+      <div className="dashboard-table-wrap">
+        <table className="dashboard-table">
+          <thead className="bg-[#795548] text-gray-700 text-sm md:text-base lg:text-lg">
+            <tr>
+              <th className="p-3 text-left text-white">#</th>
+              <th className="p-3 text-left text-white">Name</th>
+              <th className="p-3 text-left text-white">Email</th>
+              <th className="p-3 text-center text-white">Verified</th>
+              <th className="p-3 text-center text-white">Bank Account</th>
+              <th className="p-3 text-center text-white">Salary</th>
+              <th className="p-3 text-center text-white">Pay</th>
+              <th className="p-3 text-center text-white">Details</th>
+            </tr>
+          </thead>
+          <tbody>
+            {employees?.map((employee, index) => (
+              <tr key={employee.id}>
               <td className="p-3 font-semibold text-gray-800">{index + 1}</td>
               <td className="p-3">{employee.name}</td>
               <td className="p-3 text-gray-600">{employee.email}</td>
@@ -103,7 +106,7 @@ const EmpList = () => {
                   onClick={async () => {
                     await axios
                       .patch(
-                        `${import.meta.env.VITE_Localhost}/verified/${
+                        `${process.env.NEXT_PUBLIC_API_URL}/verified/${
                           employee._id
                         }`,
                         { verified: !employee.verified }
@@ -156,16 +159,24 @@ const EmpList = () => {
                 )}
               </td>
               <td className="p-3 text-center">
-                <Link to={`/dashboard/details/${employee._id}`}>
+                <Link href={`/dashboard/details/${employee._id}`}>
                   <button className="bg-gray-200 p-2 rounded-lg hover:bg-gray-300">
                     <BsFillEyeFill className="text-xl text-gray-700" />
                   </button>
                 </Link>
               </td>
             </tr>
-          ))}
-        </tbody>
-      </table>
+            ))}
+            {employees.length === 0 && (
+              <tr>
+                <td colSpan={8} className="dashboard-table-empty">
+                  No employees are available yet.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

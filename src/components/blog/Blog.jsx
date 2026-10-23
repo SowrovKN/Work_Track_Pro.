@@ -2,7 +2,7 @@ import one from "../../assets/businessman-suit-working-tablet-with-charts-confer
 import two from "../../assets/confident-business-people-standing-board-meeting.jpg";
 const Blog = () => {
   return (
-    <div>
+    <div >
       <h2 className="text-4xl font-bold mb-4 mx-auto text-center">
         Our Blog & News
       </h2>
@@ -14,7 +14,7 @@ const Blog = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-white rounded-lg p-4 shadow-sm">
             <img
-              src={one}
+              src={one.src}
               alt="Blog Post 1"
               className="w-full h-40 object-cover mb-4"
             />
@@ -30,7 +30,7 @@ const Blog = () => {
           </div>
           <div className="bg-white rounded-lg p-4 shadow-sm">
             <img
-              src={two}
+              src={two.src}
               alt="Blog Post 2"
               className="w-full h-40 object-cover mb-4"
             />

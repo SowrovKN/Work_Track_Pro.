@@ -24,7 +24,7 @@ const Testimonial = () => {
               {/* Testimonial 1 */}
               <div className="bg-[#79554833] p-6 shadow-lg rounded-lg">
                 <img
-                  src={one}
+                  src={one.src}
                   alt="Albert Webb"
                   className="w-16 h-16 mx-auto object-cover rounded-full mb-4"
                 />
@@ -43,7 +43,7 @@ const Testimonial = () => {
               {/* Testimonial 2 */}
               <div className="bg-[#79554833] p-6 shadow-lg rounded-lg">
                 <img
-                  src={two}
+                  src={two.src}
                   alt="Kelly McMillan"
                   className="w-16 h-16 mx-auto object-cover rounded-full mb-4"
                 />
@@ -61,7 +61,7 @@ const Testimonial = () => {
               {/* Testimonial 3 */}
               <div className="bg-[#79554833] p-6 shadow-lg rounded-lg">
                 <img
-                  src={three}
+                  src={three.src}
                   alt="Harold Barnett"
                   className="w-16 h-16 mx-auto object-cover rounded-full mb-4"
                 />

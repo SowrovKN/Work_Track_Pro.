@@ -36,3 +36,205 @@
 .feature-card p {
   color: #666;
 }
+
+@keyframes dashboard-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes dashboard-drawer-enter {
+  from {
+    opacity: 0.65;
+    transform: translateX(-18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes loading-orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes loading-orbit-reverse {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes loading-indicator-pulse {
+  50% {
+    transform: scale(0.78);
+    opacity: 0.7;
+  }
+}
+
+@keyframes loading-progress {
+  from {
+    transform: translateX(-150%);
+  }
+
+  to {
+    transform: translateX(260%);
+  }
+}
+
+.dashboard-page-enter {
+  animation: dashboard-enter 420ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.dashboard-card-enter {
+  animation: dashboard-enter 520ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.dashboard-card-enter:nth-child(2) {
+  animation-delay: 90ms;
+}
+
+.dashboard-drawer-enter {
+  animation: dashboard-drawer-enter 220ms ease-out both;
+}
+
+.loading-orbit {
+  animation: loading-orbit 1.3s linear infinite;
+}
+
+.loading-orbit-reverse {
+  animation: loading-orbit-reverse 2s linear infinite;
+}
+
+.loading-indicator-dot {
+  animation: loading-indicator-pulse 1.4s ease-in-out infinite;
+}
+
+.loading-progress-bar {
+  animation: loading-progress 1.5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dashboard-page-enter,
+  .dashboard-card-enter,
+  .dashboard-drawer-enter,
+  .loading-orbit,
+  .loading-orbit-reverse,
+  .loading-indicator-dot,
+  .loading-progress-bar {
+    animation: none;
+  }
+
+  .loading-progress-bar {
+    width: 55%;
+  }
+}
+
+.dashboard-table-wrap {
+  overflow-x: auto;
+  border: 1px solid #e7e2dd;
+  border-radius: 1rem;
+  background: #fff;
+  box-shadow: 0 8px 24px rgb(41 30 24 / 5%);
+}
+
+.dashboard-table {
+  width: 100%;
+  min-width: 680px;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #fff;
+}
+
+.dashboard-table thead th {
+  padding: 0.95rem 1rem;
+  border-bottom: 1px solid rgb(255 255 255 / 12%);
+  background: #795548;
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.dashboard-table tbody td {
+  padding: 0.9rem 1rem;
+  border-bottom: 1px solid #f0edea;
+  color: #57534e;
+  font-size: 0.875rem;
+  transition: background-color 180ms ease;
+}
+
+.dashboard-table tbody tr {
+  transition: background-color 180ms ease;
+}
+
+.dashboard-table tbody tr:nth-child(even) {
+  background: #fcfbfa;
+}
+
+.dashboard-table tbody tr:hover {
+  background: #f7f2ee;
+}
+
+.dashboard-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.dashboard-table .dashboard-table-empty {
+  padding: 2.5rem 1rem;
+  color: #78716c;
+  text-align: center;
+}
+
+.workflow-card {
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease,
+    border-color 220ms ease;
+}
+
+.workflow-card:hover {
+  transform: translateY(-5px);
+  border-color: #e4d1c3;
+  box-shadow: 0 18px 36px rgb(57 39 29 / 9%);
+}
+
+.workflow-icon {
+  transition:
+    transform 260ms ease,
+    box-shadow 260ms ease;
+}
+
+.workflow-card:hover .workflow-icon {
+  transform: rotate(-5deg) scale(1.06);
+  box-shadow: 0 8px 18px rgb(57 39 29 / 10%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .workflow-card,
+  .workflow-icon {
+    transition: none;
+  }
+
+  .workflow-card:hover,
+  .workflow-card:hover .workflow-icon {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dashboard-table tbody td,
+  .dashboard-table tbody tr {
+    transition: none;
+  }
+}

@@ -1,15 +1,13 @@
-import { Outlet } from "react-router-dom";
+/* eslint react/prop-types: off */
 import Footer from "../footer/Footer";
 import Navbar from "../navbar/Navbar";
 
-const Layout = () => {
+const Layout = ({ children }) => {
   return (
-    <div>
-      <Navbar></Navbar>
-      <div className="bg-white">
-        <Outlet></Outlet>
-      </div>
-      <Footer></Footer>
+    <div className="flex min-h-screen flex-col bg-white">
+      <Navbar />
+      <main className="flex-1">{children}</main>
+      <Footer />
     </div>
   );
 };

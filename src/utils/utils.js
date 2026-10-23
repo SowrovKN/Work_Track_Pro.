@@ -5,7 +5,7 @@ export const imgURL = async img =>{
     formData.append("image", img);
     const { data } = await axios.post(
       `https://api.imgbb.com/1/upload?key=${
-        import.meta.env.VITE_IMGBB_API_KEY
+        process.env.NEXT_PUBLIC_IMGBB_API_KEY
       }`,
       formData
     );

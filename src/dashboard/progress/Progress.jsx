@@ -1,7 +1,9 @@
+"use client";
+
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import Loading from "../../pages/loading/Loading";
-import Error from "../../pages/Error/Error";
+import Loading from "../../screens/loading/Loading";
+import Error from "../../screens/Error/Error";
 
 const Progress = () => {
   const [selectedName, setSelectedName] = useState("");
@@ -14,7 +16,7 @@ const Progress = () => {
   } = useQuery({
     queryKey: ["work"],
     queryFn: async () => {
-      const res = await fetch(`${import.meta.env.VITE_Localhost}/worklist`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/worklist`);
       return res.json();
     },
   });
@@ -83,13 +85,17 @@ const Progress = () => {
       </div>
 
       {/* Total Hours */}
-      <div className="bg-[#927c75] text-white p-3 rounded-lg text-center font-semibold text-lg mb-4">
-        Total Work Hours: {totalHours}
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-2 rounded-2xl border border-[#795548]/10 bg-white px-5 py-4 shadow-sm">
+        <span className="text-sm font-medium text-stone-500">Total work hours</span>
+        <span className="text-2xl font-bold tracking-tight text-[#795548]">
+          {totalHours}
+          <span className="ml-1.5 text-sm font-medium text-stone-500">hrs</span>
+        </span>
       </div>
 
       {/* Responsive Table */}
-      <div className="overflow-x-auto">
-        <table className="w-full bg-white border rounded-lg shadow-md">
+      <div className="dashboard-table-wrap">
+        <table className="dashboard-table">
           <thead className="bg-[#795548] text-sm sm:text-sm md:text-base lg:text-lg">
             <tr>
               <th className="p-2 text-left text-white">#</th>
@@ -102,10 +108,7 @@ const Progress = () => {
           </thead>
           <tbody>
             {filteredData?.map((emp, index) => (
-              <tr
-                key={emp.id}
-                className="border-b hover:bg-gray-50 text-sm  md:text-base lg:text-lg"
-              >
+              <tr key={emp.id}>
                 <td className="p-2">{index + 1}</td>
                 <td className="p-2">{emp.name}</td>
                 <td className="p-2">{emp.email}</td>
@@ -114,6 +117,13 @@ const Progress = () => {
                 <td className="p-2 text-center">{emp.date}</td>
               </tr>
             ))}
+            {filteredData.length === 0 && (
+              <tr>
+                <td colSpan={6} className="dashboard-table-empty">
+                  No work records match the selected filters.
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

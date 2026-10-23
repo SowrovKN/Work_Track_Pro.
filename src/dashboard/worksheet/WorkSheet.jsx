@@ -1,10 +1,12 @@
+"use client";
+
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import Loading from "../../pages/loading/Loading";
+import Loading from "../../screens/loading/Loading";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../components/firebase/AuthProvider";
 import Swal from "sweetalert2";
-import Error from "../../pages/Error/Error";
+import Error from "../../screens/Error/Error";
 
 const WorkSheet = () => {
   const { user } = useContext(AuthContext);
@@ -20,7 +22,7 @@ const WorkSheet = () => {
     queryKey: ["speciicWorkList"],
     queryFn: async () => {
       const res = await fetch(
-        `${import.meta.env.VITE_Localhost}/worklist/${user.email}`
+        `${process.env.NEXT_PUBLIC_API_URL}/worklist/${user.email}`
       );
       const data = await res.json();
       return data.sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -38,7 +40,7 @@ const WorkSheet = () => {
     const newWork = { workName, time, date, email, name };
 
     try {
-      await axios.post(`${import.meta.env.VITE_Localhost}/workAdd`, newWork);
+      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/workAdd`, newWork);
       refetch();
       form.reset();
       Swal.fire({
@@ -73,7 +75,7 @@ const WorkSheet = () => {
         .then(async (result) => {
           if (result.isConfirmed) {
             await axios
-              .delete(`${import.meta.env.VITE_Localhost}/deleteWork/${id}`)
+              .delete(`${process.env.NEXT_PUBLIC_API_URL}/deleteWork/${id}`)
               .then((data) => {
                 // console.log(data);
                 swalWithBootstrapButtons.fire({
@@ -107,7 +109,7 @@ const WorkSheet = () => {
   const handleUpdate = async () => {
     try {
       await axios.patch(
-        `${import.meta.env.VITE_Localhost}/updateWork/${selectedTask._id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/updateWork/${selectedTask._id}`,
         {
           workName: selectedTask.workName,
           time: selectedTask.time,
@@ -166,8 +168,8 @@ const WorkSheet = () => {
         </form>
       </div>
 
-      <div className="mt-6 overflow-x-auto">
-        <table className="w-full border-collapse border border-gray-300">
+      <div className="dashboard-table-wrap mt-6">
+        <table className="dashboard-table">
           <thead>
             <tr className="bg-[#795548] text-sm md:text-base lg:text-lg ">
               <th className="p-2 text-white">#</th>
@@ -180,7 +182,7 @@ const WorkSheet = () => {
           </thead>
           <tbody>
             {tasks?.map((task, index) => (
-              <tr key={task._id || index} className="text-center text-sm md:text-base lg:text-lg">
+              <tr key={task._id || index} className="text-center">
                 <td className="p-2">{index + 1}</td>
                 <td className="p-2">{task.workName}</td>
                 <td className="p-2">{task.time}</td>
@@ -203,6 +205,13 @@ const WorkSheet = () => {
                 </td>
               </tr>
             ))}
+            {tasks.length === 0 && (
+              <tr>
+                <td colSpan={6} className="dashboard-table-empty">
+                  No work entries yet. Add your first task above.
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

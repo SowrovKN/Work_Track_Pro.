@@ -21,7 +21,7 @@ const Teams = () => {
             {/* Founder */}
             <div className="team-member bg-[#79554833] p-8 rounded-lg shadow-lg transform transition duration-500 hover:scale-105 animate-slideUp">
               <img
-                src={img1}
+                src={img1.src}
                 alt="Founder"
                 className="w-32 h-32 object-cover mx-auto rounded-full mb-6"
               />
@@ -36,7 +36,7 @@ const Teams = () => {
             {/* Team Member 1 */}
             <div className="team-member bg-[#79554833] p-8 rounded-lg shadow-lg transform transition duration-500 hover:scale-105 animate-slideUp animation-delay-200">
               <img
-                src={img2}
+                src={img2.src}
                 alt="Team Member 1"
                 className="w-32 h-32 object-cover mx-auto rounded-full mb-6"
               />
@@ -53,7 +53,7 @@ const Teams = () => {
             {/* Team Member 2 */}
             <div className="team-member bg-[#79554833] p-8 rounded-lg shadow-lg transform transition duration-500 hover:scale-105 animate-slideUp animation-delay-300">
               <img
-                src={img3}
+                src={img3.src}
                 alt="Team Member 2"
                 className="w-32 h-32 object-cover mx-auto rounded-full mb-6"
               />

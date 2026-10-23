@@ -1,7 +1,9 @@
+"use client";
+
 import { useQuery } from "@tanstack/react-query";
-import Loading from "../../pages/loading/Loading";
-import Error from "../../pages/Error/Error";
-import { useParams } from "react-router-dom";
+import Loading from "../../screens/loading/Loading";
+import Error from "../../screens/Error/Error";
+import { useParams } from "next/navigation";
 import { FaCheckCircle } from "react-icons/fa";
 import { ImCross } from "react-icons/im";
 
@@ -15,7 +17,7 @@ const Details = () => {
     queryKey: ["details", params.id],
     queryFn: async () => {
       const res = await fetch(
-        `${import.meta.env.VITE_Localhost}/details/${params.id}`
+        `${process.env.NEXT_PUBLIC_API_URL}/details/${params.id}`
       );
       return res.json();
     },
